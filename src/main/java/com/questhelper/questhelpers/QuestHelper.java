@@ -257,6 +257,8 @@ public abstract class QuestHelper implements Module, QuestDebugRenderer
 		hasInitialized = true;
 	}
 
+	public String getDuration() { return null; }
+
 	public List<ItemRequirement> getItemRequirements()
 	{
 		return null;

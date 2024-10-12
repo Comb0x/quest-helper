@@ -73,10 +73,12 @@ public class QuestOverviewPanel extends JPanel
 
 	public QuestHelper currentQuest;
 
+
 	private final QuestRequirementsPanel questGeneralRequirementsPanel;
 	private final QuestRequirementsPanel questGeneralRecommendedPanel;
 	private final QuestRequirementsPanel questItemRequirementsPanel;
 	private final QuestRequirementsPanel questItemRecommendedPanel;
+	private final JPanel questDurationPanel;
 	private final JPanel questCombatRequirementsListPanel;
 	private final JPanel questNotesPanel;
 	private final JPanel questNotesList;
@@ -191,6 +193,10 @@ public class QuestOverviewPanel extends JPanel
 		questNotesPanel = notes.getLeft();
 		questNotesList = notes.getRight();
 		overviewPanel.add(questNotesPanel);
+
+		var duration = QuestRequirementsPanel.createGenericGroup("Duration:");
+		questDurationPanel = duration.getRight();
+		overviewPanel.add(duration.getLeft());
 
 		questRewardsPanel = new QuestRewardsPanel();
 		overviewPanel.add(questRewardsPanel);
@@ -437,6 +443,9 @@ public class QuestOverviewPanel extends JPanel
 		/* External Resources */
 		updateExternalResourcesPanel(quest);
 
+		/* Duration */
+		updateQuestDuration(quest.getDuration());
+
 		/* Quest overview */
 		updateQuestNotes(quest.getNotes());
 
@@ -598,6 +607,23 @@ public class QuestOverviewPanel extends JPanel
 
 		questExternalResourcesList.removeAll();
 		questExternalResourcesList.add(wikiBtn, BorderLayout.EAST);
+	}
+
+	private void updateQuestDuration(String duration)
+	{
+		if(duration != null)
+		{
+			var overviewLabel = JGenerator.makeJTextPane();
+			overviewLabel.setForeground(Color.GRAY);
+			overviewLabel.setText(duration);
+
+			questDurationPanel.add(overviewLabel, BorderLayout.EAST);
+			questDurationPanel.setVisible(true);
+		}
+		else
+		{
+			questDurationPanel.setVisible(false);
+		}
 	}
 
 	private void updateQuestNotes(List<String> notes)
